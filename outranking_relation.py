@@ -4,16 +4,16 @@ import numpy as np
 import numpy.typing as npt
 
 
-class OutrankingMatrix(ABC):
+class OutrankingRelation(ABC):
     @abstractmethod
-    def preference(of: Any, over: Any) -> float:
+    def preference(self, of: Any, over: Any) -> float:
         pass
 
 
-class OutrankingMatrixNumpy(OutrankingMatrix):
-    def __init__(self, matrix: npt.ArrayLike, legend: Dict[Any, int]) -> None:
+class OutrankingMatrixNumpy(OutrankingRelation):
+    def __init__(self, matrix: npt.ArrayLike, labels: list[str]) -> None:
         self.matrix = np.array(matrix)
-        self.legend = legend
+        self.legend = {label: index for index, label in enumerate(labels)}
 
     def preference(self, of: Any, over: Any) -> float:
         return self.matrix[self.legend[of], self.legend[over]]
