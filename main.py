@@ -3,6 +3,7 @@ from enum import Enum
 from outranking_relation import OutrankingMatrixNumpy
 import ned
 import seo
+import ranked_pairs
 
 
 see_preference_relation = OutrankingMatrixNumpy(
@@ -11,4 +12,4 @@ see_preference_relation = OutrankingMatrixNumpy(
 )
 
 # print(ned.ned(SEE_NAMES, 4, see_preference_relation))
-print(seo.seo(SEE_NAMES, 4, see_preference_relation))
+print(ranked_pairs.ranked_pairs(SEE_NAMES, 4, see_preference_relation))
