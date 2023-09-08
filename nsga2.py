@@ -18,7 +18,7 @@ from typing import Any
 
 def nsga2(
     variants: list[str], chosen_amount: int, outranking_relation: OutrankingRelation
-) -> list[Any]:
+) -> list[list[str]]:
     problem = ChoosingVariants(outranking_relation, chosen_amount)
     algorithm = NSGA2(
         pop_size=100,
