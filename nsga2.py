@@ -35,30 +35,14 @@ def nsga2(
         termination=get_termination("n_gen", 100),
         verbose=True,
     )
-    # plot = Scatter()
-    # plot.add(problem.pareto_front(), plot_type="line", color="black", alpha=0.7)
-    # plot.add(res.F, facecolor="none", edgecolor="red")
-    # plot.show()
-    # pareto_front = non_dominated_sorting.do(res.F, only_non_dominated_front=True)
-    # pareto_front = problem.pareto_front()
-    # print(f"Pareto front solutions ({len(pareto_front)}):")
-    # for i, subset_id in enumerate(res.X[:6]):
-    #     print(
-    #         f"Areas ids: {[variants[i] for i in range(len(variants)) if subset_id[i]]}"
-    #     )
-    #     print(f"Objective values: {res.F[i]}")
-    #     print()
-    # # print(res.X[0])
 
-    print("PARETO FRONT")
+    chosen_solutions_sets = [
+        np.array(variants)[np.where(binary_solution == 1)] for binary_solution in res.X
+    ]
 
-    for i in range(len(res.F)):
-        print(
-            f"{[variants[j] for j in range(len(variants)) if res.X[i][j] == 1]}: {res.F[i]}"
-        )
-        print()
-
-    return []
+    return [
+        list(chosen_solutions_set) for chosen_solutions_set in chosen_solutions_sets
+    ]
 
 
 class RandomSubsetSampling(Sampling):

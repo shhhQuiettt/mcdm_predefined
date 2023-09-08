@@ -24,8 +24,10 @@ research_entities_preference_relation = OutrankingMatrixNumpy(
     RESEARCH_ENTITIES_OUTRANKING_MATRIX, labels=RESEARCH_ENTITIES["id"]
 )
 
-nsga2.nsga2(
+sets = nsga2.nsga2(
     RESEARCH_ENTITIES["id"],
     chosen_amount=5,
     outranking_relation=research_entities_preference_relation,
 )
+
+print(sets)
