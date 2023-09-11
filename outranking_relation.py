@@ -28,3 +28,6 @@ class OutrankingMatrixNumpy(OutrankingRelation):
 
     def preference_over_indeces(self, of: int, over: int) -> float:
         return self.matrix[of, over]
+
+    def __str__(self) -> str:
+        return str(self.matrix)
