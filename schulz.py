@@ -1,11 +1,60 @@
 from outranking_relation import OutrankingRelation, OutrankingMatrixNumpy
-from typing import Iterable, Any
+from typing import Any, Optional
 import numpy.typing as npt
 import numpy as np
 import itertools
 
 
-def floyd_warshall(distance_matrix: npt.NDArray):
+def schulz(
+    variants: list[str], winners_amount: int, outranking_relation: OutrankingRelation
+) -> list[list[Any]]:
+    pairwise_preference_matrix = pair_thresholded_preference_matrix(
+        variants, outranking_relation
+    )
+    paths_strengths = strongest_paths(pairwise_preference_matrix)
+
+    solutions = schulz_iteration(paths_strengths, [], winners_amount)
+
+    return [[variants[variant_id] for variant_id in solution] for solution in solutions]
+
+
+def schulz_iteration(
+    path_strenghts_matrix: npt.NDArray,
+    solution: list[Any],
+    desired_length: int,
+    depth: int = 0,
+):
+    # assert len(outranking_variants_ids) == 1, "Current dummy version"
+
+    if len(solution) == desired_length:
+        return [solution]
+
+    outranking_variants_ids = get_stongest_path_variant_ids(
+        path_strenghts_matrix, solution
+    )
+
+    solutions = []
+    for chosen_variant_id in outranking_variants_ids:
+        new_paths_strengths_matrix = path_strenghts_matrix.copy()
+        new_paths_strengths_matrix[chosen_variant_id, :] = 0
+        new_paths_strengths_matrix[:, chosen_variant_id] = 0
+
+        new_solution = solution.copy()
+        new_solution.append(chosen_variant_id)
+
+        solutions.extend(
+            schulz_iteration(
+                new_paths_strengths_matrix,
+                new_solution,
+                desired_length,
+                depth=depth + 1,
+            )
+        )
+
+    return solutions
+
+
+def strongest_paths(distance_matrix: npt.NDArray) -> npt.NDArray:
     path_strenghs = distance_matrix.copy()
 
     no_of_vertices = distance_matrix.shape[0]
@@ -52,26 +101,43 @@ def pair_thresholded_preference_matrix(
                 variants[variant2_id], variants[variant1_id]
             )
 
-    return OutrankingMatrixNumpy(pair_thresholded_matrix, variants)
+    return pair_thresholded_matrix
 
 
-def schulz(
-    variants: list[str], winners_amount: int, outranking_relation: OutrankingRelation
-) -> list[str]:
-    example = np.array(
-        [
-            [1, 0.001, 0.527, 0.334],
-            [0.772, 1, 0.833, 0.923],
-            [0.617, 0.107, 1, 0.313],
-            [0.017, 0.821, 0.717, 1],
-        ]
-    )
-    pairwise_preference_matrix = pair_thresholded_preference_matrix(
-        list(range(4)), OutrankingMatrixNumpy(example, list(range(4)))
-    ).matrix
+# This function will break if there are two winning wariatns
+# Because it requires that wariants beats ALL converse paths
+def get_stongest_path_variant_ids(
+    pairwise_preference_matrix: npt.NDArray, already_chosen: Optional[list[int]] = None
+) -> list[int]:
+    if already_chosen is None:
+        already_chosen = []
 
-    print(pairwise_preference_matrix)
+    no_of_variants = pairwise_preference_matrix.shape[0]
 
-    print(floyd_warshall(pairwise_preference_matrix))
+    variants_ids = [
+        True if i not in already_chosen else False for i in range(no_of_variants)
+    ]
 
-    return variants
+    for variant_id in range(len(variants_ids)):
+        if not variants_ids[variant_id]:
+            continue
+
+        for other_variant_id in range(len(variants_ids)):
+            if not variants_ids[other_variant_id]:
+                continue
+
+            if variant_id == other_variant_id:
+                continue
+
+            if (
+                pairwise_preference_matrix[variant_id, other_variant_id]
+                <= pairwise_preference_matrix[other_variant_id, variant_id]
+            ):
+                variants_ids[variant_id] = False
+                break
+
+    return [
+        variant_id
+        for variant_id in range(len(variants_ids))
+        if variants_ids[variant_id]
+    ]

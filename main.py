@@ -18,4 +18,4 @@ see_preference_relation = OutrankingMatrixNumpy(
 )
 
 
-schulz.schulz(SEE_NAMES, 3, see_preference_relation)
+print(schulz.schulz(SEE_NAMES, 4, see_preference_relation))
