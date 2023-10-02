@@ -3,7 +3,10 @@ from test_data import (
     RESEARCH_ENTITIES,
 )
 from outranking_relation import OutrankingMatrixNumpy
-from nsga2 import ChoosingVariants
+
+from nsga.nsga2 import ChoosingVariants
+
+# from nsga.nsga2_2 import ChoosingVariants
 
 
 research_entities_preference_relation = OutrankingMatrixNumpy(
@@ -20,6 +23,8 @@ out = dict()
 # chosen = [11, 402, 451, 485, 504]
 chosen = [11, 402, 485, 504, 910]
 chosen_ids = [1 if el in chosen else 0 for el in RESEARCH_ENTITIES["id"]]
+# chosen_uds = [list(RESEARCH_ENTITIES["id"]).index(el) for el in chosen]
 
+print(chosen_ids)
 alg._evaluate(chosen_ids, out)
 print(out)
