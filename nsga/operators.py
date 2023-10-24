@@ -11,7 +11,6 @@ class BinaryCrossover(Crossover):
     # Take a look again
     def _do(self, problem, X, **kwargs):
         n_parents, n_matings, n_var = X.shape
-        print(f"{self.n_offsprings=}, {n_matings=}, {problem.n_var=}")
 
         _X = np.full((self.n_offsprings, n_matings, problem.n_var), False, dtype=int)
 

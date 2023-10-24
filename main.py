@@ -1,3 +1,4 @@
+from wsm.objective_functions_test import run
 from test_data import (
     SEE_PREFERENCES,
     SEE_NAMES,
@@ -9,6 +10,7 @@ from enum import Enum
 from outranking_relation import OutrankingMatrixNumpy
 import ned
 from nsga.nsga2_2 import nsga2 as nsga2_2
+from wsm.wsm import wsm_variants
 
 from nsga.nsga2 import nsga2 as nsga2_1
 import seo
@@ -27,14 +29,14 @@ research_entities_outranking_relation = OutrankingMatrixNumpy(
 
 
 # print(nsga2_2(RESEARCH_ENTITIES["id"], 4, research_entities_outranking_relation))
-t2 = timeit(
-    lambda: nsga2_2(RESEARCH_ENTITIES["id"], 5, research_entities_outranking_relation),
-    number=10,
-)
+# t2 = timeit(
+#     lambda: nsga2_2(RESEARCH_ENTITIES["id"], 5, research_entities_outranking_relation),
+#     number=5,
+# )
 
-t1 = timeit(
-    lambda: nsga2_1(RESEARCH_ENTITIES["id"], 5, research_entities_outranking_relation),
-    number=10,
-)
+# t1 = timeit(
+#     lambda: nsga2_1(RESEARCH_ENTITIES["id"], 5, research_entities_outranking_relation),
+#     number=5,
+# )
 
-print(f"{t1=}, {t2=}")
+wsm_variants(list(RESEARCH_ENTITIES["id"]), 5, research_entities_outranking_relation)
