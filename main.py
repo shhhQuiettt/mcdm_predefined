@@ -5,8 +5,6 @@ from test_data import (
     RESEARCH_ENTITIES_OUTRANKING_MATRIX,
     RESEARCH_ENTITIES,
 )
-from timeit import timeit
-from enum import Enum
 from outranking_relation import OutrankingMatrixNumpy
 import ned
 from nsga.nsga2_2 import nsga2 as nsga2_2
