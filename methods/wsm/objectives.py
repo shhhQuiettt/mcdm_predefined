@@ -1,4 +1,4 @@
-from outranking_relation import OutrankingRelation
+from outranking_relation.outranking_relation import OutrankingRelation
 
 
 def chosen_strength(chosen_subset: list, outranking_relation, variants: list) -> float:

@@ -1,16 +1,16 @@
-from .objectives import (
+from methods.wsm.objectives import (
     chosen_strength,
     rejected_weakness,
     rejected_strength,
     chosen_weakness,
 )
-from outranking_relation import OutrankingMatrixNumpy
+
+from outranking_relation.outranking_relation import OutrankingMatrixNumpy
 from functools import partial
 
-
 from test_data import (
-    RESEARCH_ENTITIES_OUTRANKING_MATRIX,
     RESEARCH_ENTITIES,
+    RESEARCH_ENTITIES_OUTRANKING_MATRIX,
 )
 
 outranking_relation = OutrankingMatrixNumpy(
@@ -43,4 +43,8 @@ objective_functions = [
 
 
 def run():
-    print([f([11, 395, 402, 451, 504]) for f in objective_functions])
+    print([f([11, 402, 451, 485, 504]) for f in objective_functions])
+
+
+if __name__ == "__main__":
+    run()

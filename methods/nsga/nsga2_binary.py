@@ -1,15 +1,13 @@
+from outranking_relation.outranking_relation import OutrankingRelation
+from .operators import BinaryCrossover, TwoBitsSwapMutation
+
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.termination import get_termination
 from pymoo.optimize import minimize
-from outranking_relation import OutrankingRelation
 from pymoo.core.sampling import Sampling
 import numpy.typing as npt
-
-from .operators import BinaryCrossover, TwoBitsSwapMutation
-
 import numpy as np
-from typing import Any
 
 
 def nsga2(

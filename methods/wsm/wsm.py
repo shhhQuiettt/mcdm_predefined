@@ -8,9 +8,8 @@ from .objectives import (
     rejected_strength,
     chosen_weakness,
 )
-from outranking_relation import OutrankingRelation
+from outranking_relation.outranking_relation import OutrankingRelation
 import numpy.typing as npt
-from outranking_relation import OutrankingRelation
 import numpy as np
 from functools import partial
 import itertools
@@ -29,7 +28,6 @@ def calculate_objectives(
     subsets_objectives = np.array(
         [
             [objective_function(subset) for objective_function in objective_functions]
-            # for subset in random.sample(possible_subsets, 500)
             for subset in possible_subsets
         ]
     )

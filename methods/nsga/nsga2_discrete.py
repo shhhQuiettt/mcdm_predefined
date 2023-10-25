@@ -1,15 +1,13 @@
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.core.problem import ElementwiseProblem
-from pymoo.core.sampling import Sampling
 from pymoo.termination import get_termination
 from pymoo.optimize import minimize
-from outranking_relation import OutrankingRelation
+from outranking_relation.outranking_relation import OutrankingRelation
 import numpy.typing as npt
 
 from .operators2 import BinaryCrossover, TwoBitsSwapMutation, RandomSubsetSampling
 
 import numpy as np
-from typing import Any
 
 
 def nsga2(

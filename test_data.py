@@ -6,7 +6,7 @@ from outranking_relation.electre3 import (
 )
 
 SEE_NAMES = ["KAM", "KOS", "KRA", "LEG", "LOD", "MIE", "POM", "SLU", "STA", "TAR"]
-SEE_PREFERENCES = [
+SEE_OUTRANKING_MATRIX = [
     [0.000, 0.330, 0.330, 0.330, 0.330, 0.330, 0.330, 0.197, 0.027, 0.330],
     [0.670, 0.000, 0.359, 0.670, 0.574, 0.574, 0.797, 0.670, 0.670, 0.690],
     [0.670, 0.374, 0.000, 0.695, 0.330, 0.330, 0.625, 0.670, 0.670, 0.530],
