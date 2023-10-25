@@ -1,5 +1,5 @@
 from collections.abc import Iterable
-from outranking_relation import OutrankingRelation
+from outranking_relation.outranking_relation import OutrankingRelation
 import itertools
 
 
@@ -32,7 +32,7 @@ def adding_arc_generates_cycle(
 
 
 def ranked_pairs(
-    variants: list[str], winners_amount: int, outranking_relation: OutrankingRelation
+    variants: list[str], chosen_amount: int, outranking_relation: OutrankingRelation
 ) -> list[str]:
     preference_pairs = {}
     for variant1, variant2 in itertools.combinations(variants, 2):
@@ -52,4 +52,4 @@ def ranked_pairs(
         preference_pairs.keys(), key=lambda k: preference_pairs[k], reverse=True
     )
 
-    return sorted_preference_pairs[:winners_amount]
+    return sorted_preference_pairs[:chosen_amount]

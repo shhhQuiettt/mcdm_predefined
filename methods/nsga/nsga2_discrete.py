@@ -1,3 +1,4 @@
+from pandas.core.interchange.dataframe_protocol import enum
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.termination import get_termination
@@ -12,7 +13,7 @@ import numpy as np
 
 def nsga2(
     variants: list[str], chosen_amount: int, outranking_relation: OutrankingRelation
-) -> list[list[str]]:
+) -> list[tuple[list[str], list[float]]]:
     problem = ChoosingVariants(outranking_relation, chosen_amount)
     algorithm = NSGA2(
         pop_size=100,
@@ -30,12 +31,9 @@ def nsga2(
         verbose=True,
     )
 
-    # chosen_solutions_sets = [
-    #     np.array(variants)[np.where(binary_solution == 1)] for binary_solution in res.X
-    # ]
-
     chosen_solutions_sets = [
-        list(np.array(variants)[elements_ids]) for elements_ids in res.X
+        (list(np.array(variants)[elements_ids]), list(res.F[i]))
+        for i, elements_ids in enumerate(res.X)
     ]
 
     return chosen_solutions_sets

@@ -1,4 +1,4 @@
-from outranking_relation import OutrankingRelation, OutrankingMatrixNumpy
+from outranking_relation.outranking_relation import OutrankingRelation
 from typing import Any, Optional
 import numpy.typing as npt
 import numpy as np
@@ -6,14 +6,14 @@ import itertools
 
 
 def schulz(
-    variants: list[str], winners_amount: int, outranking_relation: OutrankingRelation
+    variants: list[str], chosen_amount: int, outranking_relation: OutrankingRelation
 ) -> list[list[Any]]:
     pairwise_preference_matrix = pair_thresholded_preference_matrix(
         variants, outranking_relation
     )
     paths_strengths = strongest_paths(pairwise_preference_matrix)
 
-    solutions = schulz_iteration(paths_strengths, [], winners_amount)
+    solutions = schulz_iteration(paths_strengths, [], chosen_amount)
 
     return [[variants[variant_id] for variant_id in solution] for solution in solutions]
 

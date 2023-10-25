@@ -1,5 +1,5 @@
 from typing import Iterable
-from outranking_relation import OutrankingRelation
+from outranking_relation.outranking_relation import OutrankingRelation
 import itertools
 import math
 
@@ -16,12 +16,12 @@ def seo_measure(
 
 
 def seo(
-    variants: list[str], winners_amount: int, outranking_relation: OutrankingRelation
+    variants: list[str], chosen_amount: int, outranking_relation: OutrankingRelation
 ) -> tuple[list[list[str]], float]:
     chosen_subsets = []
     best_seo_measure = -1
 
-    for chosen_variants in itertools.combinations(variants, winners_amount):
+    for chosen_variants in itertools.combinations(variants, chosen_amount):
         rejected_variants = set(variants) - set(chosen_variants)
         current_seo_measure = seo_measure(
             chosen_variants, rejected_variants, outranking_relation

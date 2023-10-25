@@ -1,4 +1,4 @@
-from outranking_relation import OutrankingRelation
+from outranking_relation.outranking_relation import OutrankingRelation
 import itertools
 from typing import Iterable
 
@@ -17,12 +17,12 @@ def ned_measure(
 
 
 def ned(
-    variants: list[str], winners_amount: int, outranking_relation: OutrankingRelation
+    variants: list[str], chosen_amounts: int, outranking_relation: OutrankingRelation
 ) -> tuple[list[list[str]], int]:
     chosen_subsets = []
     best_ned_measure = -1
 
-    for chosen_variants in itertools.combinations(variants, winners_amount):
+    for chosen_variants in itertools.combinations(variants, chosen_amounts):
         rejected_variants = set(variants) - set(chosen_variants)
         current_ned_measure = ned_measure(
             chosen_variants, rejected_variants, outranking_relation

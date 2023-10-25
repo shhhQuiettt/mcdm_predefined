@@ -12,7 +12,7 @@ import numpy as np
 
 def nsga2(
     variants: list[str], chosen_amount: int, outranking_relation: OutrankingRelation
-) -> list[list[str]]:
+) -> list[tuple[list[str], list[float]]]:
     problem = ChoosingVariants(outranking_relation, chosen_amount)
     algorithm = NSGA2(
         pop_size=100,
@@ -35,7 +35,8 @@ def nsga2(
     ]
 
     return [
-        list(chosen_solutions_set) for chosen_solutions_set in chosen_solutions_sets
+        (list(chosen_solutions_set), list(res.F[i]))
+        for i, chosen_solutions_set in enumerate(chosen_solutions_sets)
     ]
 
 
