@@ -2,9 +2,8 @@ from test_data import (
     RESEARCH_ENTITIES_OUTRANKING_MATRIX,
     RESEARCH_ENTITIES,
 )
-from outranking_relation import OutrankingMatrixNumpy
+from outranking_relation. import OutrankingMatrixNumpy
 
-from nsga.nsga2 import ChoosingVariants
 
 # from convex import objective_functions
 

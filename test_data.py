@@ -1,9 +1,11 @@
 import pandas as pd
-from electre3 import Criterion, CriterionType, get_outranking_relation
+from outranking_relation.electre3 import (
+    Criterion,
+    CriterionType,
+    get_outranking_relation,
+)
 
 SEE_NAMES = ["KAM", "KOS", "KRA", "LEG", "LOD", "MIE", "POM", "SLU", "STA", "TAR"]
-
-
 SEE_PREFERENCES = [
     [0.000, 0.330, 0.330, 0.330, 0.330, 0.330, 0.330, 0.197, 0.027, 0.330],
     [0.670, 0.000, 0.359, 0.670, 0.574, 0.574, 0.797, 0.670, 0.670, 0.690],
@@ -67,6 +69,8 @@ RESEARCH_ENTITIES = pd.DataFrame(
         [988, 55.66, 274.4, 0.38, 65],
     ],
 )
+
+RESEARCH_ENTITIES_NAMES = list(RESEARCH_ENTITIES["id"])
 
 RESEARCH_ENTITIES_CRITERIA = [
     Criterion(

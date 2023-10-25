@@ -38,6 +38,22 @@ def get_outranking_relation(
         marginal_discordance_index(variants, criterion) for criterion in criterions
     ]
 
+    outranking_relation = np.zeros((len(variants), len(variants)))
+
+    for variant1, variant2 in itertools.product(variants.index, variants.index):
+        outranking_relation[variant1, variant2] = comprehensive_concordance_index[
+            variant1, variant2
+        ]
+
+        for marginal_discordance_matrix in marginal_discordance_matrices:
+            if (
+                marginal_discordance_matrix[variant1, variant2]
+                > outranking_relation[variant1, variant2]
+            ):
+                outranking_relation[variant1, variant2] *= (
+                    1 - marginal_discordance_matrix[variant1, variant2]
+                ) / (1 - outranking_relation[variant1, variant2])
+
     return comprehensive_concordance_index
 
 
@@ -169,5 +185,5 @@ def get_discordance(
                 variant2.loc[criterion.name]
                 - (variant1.loc[criterion.name] - criterion.veto_threshold)
             ) / (criterion.veto_threshold - criterion.preference_threshold)
-
+    else:
         raise ValueError("Unknown criterion type")
